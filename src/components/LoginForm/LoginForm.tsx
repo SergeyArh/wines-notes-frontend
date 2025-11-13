@@ -3,6 +3,10 @@ import styled from "styled-components";
 import { useForm, SubmitHandler, Controller, set } from "react-hook-form";
 import { TextInput } from "../ui/TextInput";
 import { useEffect } from "react";
+import { useLogin } from "../../hooks/useLogin";
+import { ErrorAlert } from "../ui/ErrorAlert";
+import { Spinner } from "../ui/Spinner";
+import { Navigate } from "react-router-dom";
 
 type UserDto = {
   email: string;
@@ -19,6 +23,8 @@ const FormContainer = styled.div`
 `;
 
 export const LoginForm = () => {
+  const { error, isPending, isSuccess, mutate } = useLogin();
+
   const {
     register,
     handleSubmit,
@@ -35,7 +41,6 @@ export const LoginForm = () => {
 
   const email = watch("email");
   const password = watch("password");
-  console.log({ email, password });
 
   useEffect(() => {
     if (email) {
@@ -46,7 +51,29 @@ export const LoginForm = () => {
     }
   }, []);
 
-  const onSubmit: SubmitHandler<UserDto> = (data) => console.log("data", data);
+  const onSubmit: SubmitHandler<UserDto> = async (data) => {
+    mutate(data);
+  };
+
+  if (error) {
+    return (
+      <FormContainer>
+        <ErrorAlert error={error} />
+      </FormContainer>
+    );
+  }
+
+  if (isPending) {
+    return (
+      <FormContainer>
+        <Spinner />
+      </FormContainer>
+    );
+  }
+
+  if (isSuccess) {
+    return <Navigate to={"/"} replace />;
+  }
 
   return (
     <FormContainer>

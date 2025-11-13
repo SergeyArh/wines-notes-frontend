@@ -1,8 +1,11 @@
-import { Button, Checkbox, FloatingLabel, Label, theme } from "flowbite-react";
+import { Alert, Button } from "flowbite-react";
 import styled from "styled-components";
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { TextInput } from "../ui/TextInput";
-import { useEffect } from "react";
+import { useCreateUser } from "../../hooks/useCreateUser";
+import { Spinner } from "../ui/Spinner";
+import { Navigate } from "react-router-dom";
+import { ErrorAlert } from "../ui/ErrorAlert";
 
 type UserDto = {
   email: string;
@@ -18,12 +21,9 @@ const FormContainer = styled.div`
   align-items: center;
 `;
 
-const FormWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
 export const RegisterForm = () => {
+  const { error, isPending, isSuccess, mutate } = useCreateUser();
+
   const {
     register,
     handleSubmit,
@@ -38,7 +38,29 @@ export const RegisterForm = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<UserDto> = (data) => console.log("data", data);
+  const onSubmit: SubmitHandler<UserDto> = async (data) => {
+    mutate(data);
+  };
+
+  if (error) {
+    return (
+      <FormContainer>
+        <ErrorAlert error={error} />
+      </FormContainer>
+    );
+  }
+
+  if (isPending) {
+    return (
+      <FormContainer>
+        <Spinner />
+      </FormContainer>
+    );
+  }
+
+  if (isSuccess) {
+    return <Navigate to={"/signin"} replace />;
+  }
 
   return (
     <FormContainer>

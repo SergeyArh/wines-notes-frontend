@@ -23,6 +23,7 @@
     "format:check": "prettier . --check"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.90.8",
     "flowbite-react": "^0.12.4",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

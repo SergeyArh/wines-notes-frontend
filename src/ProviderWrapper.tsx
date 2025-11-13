@@ -1,6 +1,8 @@
 import type { PropsWithChildren } from "react";
 import { ErrorBoundary } from "./ErrorBoundary/ErrorBoundary";
 import { createTheme, ThemeProvider } from "flowbite-react";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { queryClient } from "./common/reactQuery/queryClient";
 
 const customTheme = createTheme({
   button: {
@@ -17,7 +19,11 @@ const customTheme = createTheme({
 export const ProviderWrapper = ({ children }: PropsWithChildren) => {
   return (
     <ThemeProvider theme={customTheme}>
-      <ErrorBoundary>{children}</ErrorBoundary>
+      <ErrorBoundary>
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
+      </ErrorBoundary>
     </ThemeProvider>
   );
 };
