@@ -1,6 +1,7 @@
 const path = require("path");
 const { ProvidePlugin } = require("webpack");
 const flowbiteReact = require("flowbite-react/plugin/webpack");
+const Dotenv = require("dotenv-webpack");
 
 module.exports = {
   entry: "./src/index.tsx",
@@ -46,6 +47,7 @@ module.exports = {
   },
 
   plugins: [
+    new Dotenv(),
     new ProvidePlugin({
       React: "react",
     }),

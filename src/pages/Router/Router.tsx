@@ -9,6 +9,7 @@ import {
 import { LoginPage } from "../LoginPage/LoginPage";
 import { FallbackComponent } from "../../ErrorBoundary/FallbackComponent";
 import { SingUpPage } from "../SingUpPage";
+import { MainPage } from "../MainPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,10 +26,14 @@ const router = createBrowserRouter(
         ErrorBoundary={FallbackComponent}
       />
 
-      {/* <Route path="/" element={<Pallete />} ErrorBoundary={}>
-        <Route path="singup" element={<SingUpPage />} />
-        <Route path="signin" element={<LoginPage />} />
-      </Route> */}
+      <Route
+        path="/"
+        element={<MainPage />}
+        // ErrorBoundary={}
+      >
+        {/* <Route path="singup" element={<SingUpPage />} />
+        <Route path="signin" element={<LoginPage />} /> */}
+      </Route>
 
       <Route path="*" element={<Navigate to={"/singup"} replace />} />
     </>,

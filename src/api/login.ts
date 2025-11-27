@@ -14,12 +14,7 @@ export const login = async (requestData: UserDto): Promise<ResponseLogin> => {
       },
       body: JSON.stringify(requestData),
     });
-    if (response.ok) {
-      const json = await response.json();
-      const { token } = json || {};
-      sessionStorage.setItem("token", token);
-    }
-    throw new Error(`HTTP error! status: ${response.status}`);
+    return await response.json();
   } catch (error) {
     throw new Error(error instanceof Error ? error.message : String(error));
   }

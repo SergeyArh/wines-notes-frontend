@@ -13,7 +13,7 @@ type UserDto = {
   password: string;
 };
 
-const FormContainer = styled.div`
+export const FormContainer = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
@@ -23,7 +23,7 @@ const FormContainer = styled.div`
 `;
 
 export const LoginForm = () => {
-  const { error, isPending, isSuccess, mutate } = useLogin();
+  const { data, error, isPending, isSuccess, mutate } = useLogin();
 
   const {
     register,
@@ -50,6 +50,13 @@ export const LoginForm = () => {
       setValue("password", password);
     }
   }, []);
+
+  useEffect(() => {
+    const { token } = data || {};
+    if (token) {
+      sessionStorage.setItem("token", token);
+    }
+  }, [data]);
 
   const onSubmit: SubmitHandler<UserDto> = async (data) => {
     mutate(data);

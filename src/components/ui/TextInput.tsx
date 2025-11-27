@@ -14,6 +14,7 @@ export const TextInput = ({
   control,
   type,
   required = false,
+  ...props
 }: TextInputProps) => {
   return (
     <Controller
@@ -22,6 +23,7 @@ export const TextInput = ({
       render={({ field }) => (
         <FloatingLabel
           {...field}
+          {...props}
           variant="outlined"
           label={INPUT_LABELS[type]}
           required={required}

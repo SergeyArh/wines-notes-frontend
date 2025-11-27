@@ -1,12 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
-import type { UserDto } from "../api/createUser.types";
 import { useMemo } from "react";
-import { login } from "../api/login";
+import { createNote } from "../api/createNote";
+import type { NoteDto } from "../api/createNote.types";
 
-export const useLogin = () => {
+export const useCreateNote = () => {
   const { data, isPending, isSuccess, error, mutate } = useMutation({
-    mutationFn: (requestData: UserDto) =>
-      login({
+    mutationFn: (requestData: NoteDto) =>
+      createNote({
         ...requestData,
       }),
     gcTime: Infinity,
